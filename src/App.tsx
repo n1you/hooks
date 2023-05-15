@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { useState } from './hooks';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    const [num, serNum] = useState(1);
+    const [a, seta] = useState({ name: '1' });
+
+    return (
+        <div
+            onClick={() => {
+                serNum(
+                    (e) => e + 1,
+                    (value) => {
+                        console.log(value === num);
+                        console.log('new number', value);
+
+                        console.log(num);
+                    },
+                );
+                seta({ name: new Date().getTime().toString() }, (b) => {
+                    console.log(a);
+                    console.log(b);
+                });
+            }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+            {num}
+            <div>name: {a.name}</div>
+        </div>
+    );
 }
 
 export default App;

@@ -39,5 +39,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint-plugin-github": "^4.7.0",
+    "regexp": "^1.0.0"
   }
 }
