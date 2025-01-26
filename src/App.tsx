@@ -1,12 +1,18 @@
+import { useEffect, useMemo } from 'react';
 import './App.css';
-import { useState } from './hooks';
+import { useAsyncMemo, useState } from './hooks';
 
 function App() {
     const [num, serNum] = useState(1);
     const [a, seta] = useState({ name: '1' });
 
+    const newName = useAsyncMemo(() => {
+        return a.name + ' ---------->';
+    }, [a.name]);
+
     return (
         <div
+            style={{ padding: 20 }}
             onClick={() => {
                 serNum(
                     (e) => e + 1,
@@ -25,6 +31,9 @@ function App() {
         >
             {num}
             <div>name: {a.name}</div>
+
+            <p>123</p>
+            {newName}
         </div>
     );
 }

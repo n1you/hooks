@@ -5,7 +5,7 @@ type initData<T> = ((prevState: T) => T) | T;
 export default <T extends any>(initData: T) => {
     type CallBackFN = (value: T) => void;
     const [, setValue] = useState(initData);
-    const data = useRef({data: initData});
+    const data = useRef({ data: initData });
     const [callback, setCallback] = useState<null | CallBackFN>(null);
 
     type SetState = (value: initData<T>, callback?: CallBackFN) => void;
@@ -18,13 +18,9 @@ export default <T extends any>(initData: T) => {
 
     useLayoutEffect(() => {
         if (callback) {
-            
             callback(data.current.data);
         }
     }, [callback]);
-
-    console.log('data',data);
-    
 
     return [data.current.data, setData] as [T, SetState];
 };
