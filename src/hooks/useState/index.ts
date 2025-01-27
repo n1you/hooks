@@ -1,15 +1,22 @@
-import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useLayoutEffect, useRef, useState as RUS } from 'react';
+import useExecuteOnce from '../useExecuteOnce';
 
-type initData<T> = ((prevState: T) => T) | T;
+type SetState<S> = (value: S | ((preValue: S) => S), callback?: CallBackFN<S>) => void;
+type CallBackFN<T> = (value: T) => void;
 
-export default <T extends any>(initData: T) => {
-    type CallBackFN = (value: T) => void;
-    const [, setValue] = useState(initData);
-    const data = useRef({ data: initData });
-    const [callback, setCallback] = useState<null | CallBackFN>(null);
+// type ExtractFNType<T> = T extends (...p: any[]) => any ? ReturnType<T> : T;
 
-    type SetState = (value: initData<T>, callback?: CallBackFN) => void;
-    const setData: SetState = useCallback((action, callback) => {
+export default function useState<S>(initialState: S | (() => S)): [S, SetState<S>] {
+    const [, setValue] = RUS(initialState);
+
+    const data = useRef<{ data: S }>({ data: undefined as any });
+
+    useExecuteOnce(() => {
+        data.current.data = initialState instanceof Function ? initialState() : initialState;
+    });
+    const [callback, setCallback] = RUS<null | CallBackFN<S>>(null);
+
+    const setData: SetState<S> = useCallback((action, callback) => {
         const value = typeof action === 'function' ? (action as Function)(data.current.data) : action;
         setValue(value);
         data.current.data = value;
@@ -22,5 +29,6 @@ export default <T extends any>(initData: T) => {
         }
     }, [callback]);
 
-    return [data.current.data, setData] as [T, SetState];
-};
+    return [data.current.data, setData];
+    // as [ExtractFNType<S>, SetState<S>];
+}

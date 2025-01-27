@@ -3,7 +3,7 @@ import './App.css';
 import { useAsyncMemo, useState } from './hooks';
 
 function App() {
-    const [num, serNum] = useState(1);
+    const [num, serNum] = useState(() => 1);
     const [a, seta] = useState({ name: '1' });
 
     const newName = useAsyncMemo(() => {
