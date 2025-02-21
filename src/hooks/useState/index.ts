@@ -6,13 +6,13 @@ type CallBackFN<T> = (value: T) => void;
 
 // type ExtractFNType<T> = T extends (...p: any[]) => any ? ReturnType<T> : T;
 
-export default function useState<S>(initialState: S | (() => S)): [S, SetState<S>] {
+export default function useState<S>(initialState?: S | (() => S)): [S, SetState<S>] {
     const [, setValue] = RUS(initialState);
 
-    const data = useRef<{ data: S }>({ data: undefined as any });
+    const data = useRef<{ data: S }>({ data: undefined as S });
 
     useExecuteOnce(() => {
-        data.current.data = initialState instanceof Function ? initialState() : initialState;
+        data.current.data = (initialState instanceof Function ? initialState() : initialState) as S;
     });
     const [callback, setCallback] = RUS<null | CallBackFN<S>>(null);
 
