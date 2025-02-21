@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import './App.css';
 import { useAsyncMemo, useState } from './hooks';
+import useCheckOnly from './hooks/useCheckOnly';
 
 function App() {
     const [num, serNum] = useState(() => 1);
@@ -9,6 +10,23 @@ function App() {
     const newName = useAsyncMemo(() => {
         return a.name + ' ---------->';
     }, [a.name]);
+
+    const { getToken, checkOnly } = useCheckOnly();
+    const [data, setData] = useState<number>();
+
+    const main = (t: number) => {
+        const token = getToken();
+        setTimeout(() => {
+            checkOnly(() => {
+                setData(Date.now());
+            }, token);
+        }, t);
+    };
+
+    useEffect(() => {
+        main(2000);
+        main(1000);
+    }, []);
 
     return (
         <div
@@ -29,9 +47,10 @@ function App() {
                 });
             }}
         >
+            data {data}
+            <p></p>
             {num}
             <div>name: {a.name}</div>
-
             <p>123</p>
             {newName}
         </div>
