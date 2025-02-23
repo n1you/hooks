@@ -4,8 +4,18 @@ import useExecuteOnce from '../useExecuteOnce';
 type SetState<S> = (value: S | ((preValue: S) => S), callback?: CallBackFN<S>) => void;
 type CallBackFN<T> = (value: T) => void;
 
-// type ExtractFNType<T> = T extends (...p: any[]) => any ? ReturnType<T> : T;
-
+/**
+ * 
+ * @demo
+ * ```
+    const [data, setData] = useState(0);
+    
+    setData(1, (newData) => {
+        // newData 1
+        // data 0
+    })
+ * ```
+ */
 export default function useState<S>(initialState?: S | (() => S)): [S, SetState<S>] {
     const [, setValue] = RUS(initialState);
 

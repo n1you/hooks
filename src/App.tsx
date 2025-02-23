@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import './App.css';
-import { useAsyncMemo, useState } from './hooks';
+import { useAsyncMemo, useExecuteOnce, useState } from './hooks';
 import useCheckOnly from './hooks/useCheckOnly';
 
 function App() {
@@ -27,6 +27,23 @@ function App() {
         main(2000);
         main(1000);
     }, []);
+
+    const asyncMemoData = useAsyncMemo(() => {
+        return new Promise<number>((res) => {
+            setTimeout(() => {
+                res(123);
+            }, 1000);
+        });
+    }, []);
+
+    console.log(asyncMemoData);
+
+    const res = useExecuteOnce(() => {
+        console.log('run useExecuteOnce');
+        return 123;
+    });
+
+    console.log(res);
 
     return (
         <div

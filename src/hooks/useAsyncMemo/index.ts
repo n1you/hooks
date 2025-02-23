@@ -3,6 +3,24 @@ import useExecuteOnce from '../useExecuteOnce';
 
 type MemoParams<T> = [factory: () => T | Promise<T>, deps: unknown[]];
 
+/**
+ * 
+ * @demo  
+ * ```
+    const asyncMemoData = useAsyncMemo(() => {
+        return new Promise<number>((res) => {
+            setTimeout(() => {
+                res(123);
+            }, 1000);
+        });
+    }, []);
+
+    // a === undefined
+    // 1s: a === 123
+
+ * ```
+ * 
+ */
 export default function useAsyncMemo<T>(...params: MemoParams<T>) {
     const [fn, deps] = params;
     const firstResult = useRef({

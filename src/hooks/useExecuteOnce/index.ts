@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 const executionPhaseType = {
     mount: 'mount',
@@ -8,6 +8,20 @@ const executionPhaseType = {
 
 type ExecutionPhaseType = (typeof executionPhaseType)[keyof typeof executionPhaseType];
 
+/**
+ * 
+ * @description 在各个阶段只触发一次
+ *  @demo
+ * ```
+    const count = useExecuteOnce(() => {
+        console.log('123'); // 只会在第一次render时触发
+        return 123
+    })
+
+    // count 123
+
+ * ```
+ */
 export default function useExecuteOnce<T>(
     factory: () => T,
     /**
@@ -18,6 +32,8 @@ export default function useExecuteOnce<T>(
     },
 ) {
     const { executionPhase: pExecutionPhase = executionPhaseType.render } = options ?? {};
+
+    const result = useRef<T>();
 
     const _executionPhase = useMemo(
         () => (typeof pExecutionPhase === 'string' ? [pExecutionPhase] : pExecutionPhase),
@@ -30,7 +46,7 @@ export default function useExecuteOnce<T>(
     const executionPhase = useRef(_executionPhase);
     const runFN = (phase: ExecutionPhaseType) => {
         if (!allowExecution.current.includes(phase)) {
-            factory();
+            result.current = factory();
             allowExecution.current.push(phase);
         }
     };
@@ -54,4 +70,6 @@ export default function useExecuteOnce<T>(
             }
         };
     }, []);
+
+    return result.current;
 }
