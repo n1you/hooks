@@ -1,4 +1,4 @@
-import { generateUUID } from '../utils/fn';
+import { generateUUID } from '../../utils/fn';
 import { useCallback, useRef } from 'react';
 
 /**

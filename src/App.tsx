@@ -29,9 +29,9 @@ function App() {
     }, []);
 
     const asyncMemoData = useAsyncMemo(() => {
-        return new Promise<number>((res) => {
+        return new Promise<string>((res) => {
             setTimeout(() => {
-                res(123);
+                res('useAsyncMemo data ' + Date.now());
             }, 1000);
         });
     }, []);
@@ -74,4 +74,17 @@ function App() {
     );
 }
 
-export default App;
+const App1 = () => {
+    const asyncMemoData = useAsyncMemo(() => {
+        return new Promise<string>((res) => {
+            setTimeout(() => {
+                res('useAsyncMemo data ' + Date.now());
+            }, 1000);
+        });
+    }, []);
+
+    console.log(asyncMemoData, Date.now());
+    return <div>13</div>;
+};
+
+export default App1;

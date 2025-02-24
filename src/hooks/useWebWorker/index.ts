@@ -15,13 +15,20 @@ export function WorkerWrapper<V, P>(WorkerClass: WorkerConstructor) {
 
 /**
  *
+ *  @description
  *  接收 worker
  *  - vite： import xxx form 'file?worker'
  *  - webpack： import xxx form coreSymbolFilter.worker
  *
- * const xx = new xxx()
- *
- *  const { value, senData } = useWebWorker<type>(xx);
+ *  @demo
+ * ```
+    const xx = new xxx()
+    function Component(){
+        const { value, senData } = useWebWorker<type>(xx);
+        // ...
+    }
+ * ```
+
  */
 export default function useWebWorker<V, P>(workerInstance: Worker) {
     const workerInstance_ = useRef<Worker>(workerInstance);
@@ -38,7 +45,7 @@ export default function useWebWorker<V, P>(workerInstance: Worker) {
 
                 workerInstance_.current.addEventListener('message', getMessage);
             }),
-        []
+        [],
     );
 
     useEffect(() => {
