@@ -1,6 +1,6 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import './App.css';
-import { useAsyncMemo, useExecuteOnce, useState } from './hooks';
+import { useAsyncMemo, useExecuteOnce, useSegmentedUpdate, useState } from './hooks';
 import useCheckOnly from './hooks/useCheckOnly';
 
 function App() {
@@ -84,7 +84,20 @@ const App1 = () => {
     }, []);
 
     console.log(asyncMemoData, Date.now());
-    return <div>13</div>;
+
+    const [list, setList, initList] = useSegmentedUpdate<string[]>([]);
+    useEffect(() => {
+        setList(
+            Array(30)
+                .fill('')
+                .map((_, index) => `${index + 1}`),
+        );
+    }, []);
+
+
+    console.log(list);
+
+    return <div>{list.join(',')}</div>;
 };
 
 export default App1;
