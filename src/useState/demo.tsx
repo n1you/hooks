@@ -8,7 +8,12 @@ export default function demo() {
             <p>text: {a}</p>
             <button
                 onClick={() => {
-                    setA((e) => e + 1);
+                    setA(
+                        (e) => e + 1,
+                        (newA) => {
+                            console.log(newA);
+                        },
+                    );
                 }}
             >
                 add

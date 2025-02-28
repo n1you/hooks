@@ -1,7 +1,7 @@
 ## useState
 
--   回归 calss 的 setState
+-   `const [state,setState] = useState(0); `
+-   `setState(e=> e+1, (newState) => console.log(newState))`
 
 -   demo
-
     <code src="./demo.tsx"></code>
