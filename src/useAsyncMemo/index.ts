@@ -26,7 +26,7 @@ export default function useAsyncMemo<T>(...params: MemoParams<T>) {
     const firstResult = useRef({
         useFirstResult: false,
     });
-    const result = useRef<T>();
+    const result = useRef<T>(undefined);
     const [, updateView] = useState(0);
 
     const setResult = (v: T) => {

@@ -33,7 +33,7 @@ export default function useExecuteOnce<T>(
 ) {
     const { executionPhase: pExecutionPhase = executionPhaseType.render } = options ?? {};
 
-    const result = useRef<T>();
+    const result = useRef<T>(undefined);
 
     const _executionPhase = useMemo(
         () => (typeof pExecutionPhase === 'string' ? [pExecutionPhase] : pExecutionPhase),

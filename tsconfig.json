@@ -1,26 +1,33 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
+    "strict": true,
+    "declaration": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react",
+    "baseUrl": "./",
+    "paths": {
+      "@@/*": [
+        ".dumi/tmp/*"
+      ],
+      "Al-hooks": [
+        "src/"
+      ],
+      "Al-hooks/*": [
+        "src/*",
+        "*"
+      ]
+    }
   },
   "include": [
-    "src"
+    ".dumirc.ts",
+    "src/useAsyncMemo",
+    "src/useCheckOnly",
+    "src/useExecuteOnce",
+    "src/useFuzzySearchSort",
+    "src/useState",
+    "src/useWebWorker",
+    "src/utils",
+    "src/index.ts",
   ]
 }
