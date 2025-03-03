@@ -11,6 +11,8 @@
 # production
 /build
 
+.dumi
+
 # misc
 .DS_Store
 .env.local
