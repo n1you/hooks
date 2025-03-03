@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
 const executionPhaseType = {
     mount: 'mount',
@@ -6,7 +6,8 @@ const executionPhaseType = {
     unMount: 'unMount',
 } as const;
 
-type ExecutionPhaseType = (typeof executionPhaseType)[keyof typeof executionPhaseType];
+type ExecutionPhaseType =
+    (typeof executionPhaseType)[keyof typeof executionPhaseType];
 
 /**
  * 
@@ -31,12 +32,16 @@ export default function useExecuteOnce<T>(
         executionPhase: ExecutionPhaseType[] | ExecutionPhaseType;
     },
 ) {
-    const { executionPhase: pExecutionPhase = executionPhaseType.render } = options ?? {};
+    const { executionPhase: pExecutionPhase = executionPhaseType.render } =
+        options ?? {};
 
     const result = useRef<T>(undefined);
 
     const _executionPhase = useMemo(
-        () => (typeof pExecutionPhase === 'string' ? [pExecutionPhase] : pExecutionPhase),
+        () =>
+            typeof pExecutionPhase === 'string'
+                ? [pExecutionPhase]
+                : pExecutionPhase,
         [pExecutionPhase],
     );
 
@@ -65,7 +70,9 @@ export default function useExecuteOnce<T>(
         }
 
         return () => {
-            if (executionPhase.current.includes(executionPhaseType['unMount'])) {
+            if (
+                executionPhase.current.includes(executionPhaseType['unMount'])
+            ) {
                 fn.current(executionPhaseType['unMount']);
             }
         };

@@ -8,6 +8,7 @@ import { useCallback, useRef } from 'react';
  * 
  *  @demo
  * ```
+    const { getToken, checkOnly } = useCheckOnly()
     const [data, setData] = useState<number>();  
     const main = (t: number) => {
         const token = getToken();

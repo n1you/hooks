@@ -7,6 +7,9 @@ export default defineConfig({
     esm: {
         output: 'dist',
         input: 'src',
-        ignores: ['src/**/demo.{tsx,ts}'],
+        ignores: [
+            'src/**/demo.{tsx,ts}',
+            'src/**/demo/*'
+        ],
     },
 });

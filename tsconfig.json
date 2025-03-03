@@ -6,6 +6,9 @@
     "esModuleInterop": true,
     "jsx": "react",
     "baseUrl": "./",
+    "typeRoots": [
+      "src/types/*.d.ts"
+    ],
     "paths": {
       "@@/*": [
         ".dumi/tmp/*"
